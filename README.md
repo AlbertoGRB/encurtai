@@ -15,9 +15,11 @@ Encurtador de links com painel de cliques. Você cria um link curto, compartilha
 
 ## Como rodar
 
-Pré-requisito: Node.js 22.
+Pré-requisitos: Node.js 22 e Docker.
 
 ```bash
+cp .env.example .env
+docker compose up -d   # PostgreSQL, Redis e a API REST do Redis
 npm install
 npm run dev
 ```

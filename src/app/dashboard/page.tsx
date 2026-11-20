@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { setLinkActiveAction } from "@/actions/links";
 import { CopyButton } from "@/components/copy-button";
@@ -86,6 +87,12 @@ export default async function DashboardPage() {
                     {dateFormat.format(link.createdAt)}
                   </p>
                   <div className="flex flex-wrap items-center gap-2">
+                    <Link
+                      href={`/dashboard/links/${link.id}`}
+                      className={buttonClass}
+                    >
+                      Ver painel
+                    </Link>
                     <CopyButton text={shortUrl} />
                     <form
                       action={setLinkActiveAction.bind(

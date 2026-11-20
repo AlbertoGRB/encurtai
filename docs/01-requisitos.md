@@ -64,7 +64,7 @@ Prioridade pelo método MoSCoW: **Must** entra no MVP, **Should** entra se der t
 | RN01 | O apelido aleatório tem 7 caracteres, com letras minúsculas e números, sem os ambíguos (`0`, `o`, `1`, `l`) |
 | RN02 | O apelido escolhido tem de 3 a 30 caracteres: letras minúsculas, números e hífen, sem hífen no começo ou no fim |
 | RN03 | O apelido é único no sistema e não pode ser uma palavra reservada (`dashboard`, `login`, `api` e demais caminhos do app) |
-| RN04 | A URL de destino é `http` ou `https`, tem até 2.048 caracteres e não aponta para o próprio encurtador |
+| RN04 | A URL de destino é `http` ou `https`, tem até 2.048 caracteres, não traz usuário e senha (como em `https://banco.com@golpe.com`) e não aponta para o próprio encurtador |
 | RN05 | Link desativado ou excluído devolve 404 ao visitante |
 | RN06 | O apelido de um link excluído não volta a ficar disponível, para um link antigo nunca levar a um destino de outra pessoa |
 | RN07 | Cada usuário cria no máximo 20 links por hora |

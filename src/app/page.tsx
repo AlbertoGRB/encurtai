@@ -1,12 +1,22 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-4 px-6 py-24">
-      <h1 className="text-4xl font-semibold tracking-tight">encurtai</h1>
-      <p className="text-lg text-zinc-600 dark:text-zinc-400">
-        Encurte links e veja quantas pessoas clicaram, em que dia e de onde
-        vieram.
-      </p>
-      <p className="text-sm text-zinc-500">Em construção.</p>
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-6 px-6 py-24">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-4xl font-semibold tracking-tight">encurtai</h1>
+        <p className="text-lg text-zinc-600 dark:text-zinc-400">
+          Encurte links e veja quantas pessoas clicaram, em que dia e de onde
+          vieram.
+        </p>
+      </div>
+
+      <Link
+        href="/dashboard"
+        className="w-fit rounded-md bg-zinc-900 px-4 py-3 font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+      >
+        Ir para meus links
+      </Link>
     </main>
   );
 }

@@ -15,7 +15,7 @@ Encurtador de links com painel de cliques. Você cria um link curto, compartilha
 
 ## Como rodar
 
-Pré-requisitos: Node.js 22 e Docker.
+Pré-requisitos: Node.js 22, Docker e uma conta no GitHub.
 
 ```bash
 cp .env.example .env
@@ -26,6 +26,20 @@ npm run dev
 ```
 
 Abra <http://localhost:3000>.
+
+### Login com GitHub
+
+O login precisa de um OAuth App seu no GitHub:
+
+1. Em **Settings > Developer settings > OAuth Apps > New OAuth App**, preencha:
+   - Homepage URL: `http://localhost:3000`
+   - Authorization callback URL: `http://localhost:3000/api/auth/callback/github`
+2. Copie o Client ID para `AUTH_GITHUB_ID` e gere um Client secret para `AUTH_GITHUB_SECRET`, no `.env`.
+3. Gere o `AUTH_SECRET`, que assina a sessão:
+
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+   ```
 
 ## Scripts
 

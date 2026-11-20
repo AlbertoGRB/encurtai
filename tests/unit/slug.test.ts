@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { customSlugSchema, generateSlug } from "@/lib/slug";
+import { customSlugSchema, generateSlug, isSlugFormat } from "@/lib/slug";
 
 function errorOf(input: string) {
   const result = customSlugSchema.safeParse(input);
@@ -63,6 +63,19 @@ describe("apelido escolhido", () => {
     "recusa a palavra reservada %s",
     (slug) => {
       expect(errorOf(slug)).toBe("Apelido indisponível.");
+    },
+  );
+});
+
+describe("formato de apelido na rota", () => {
+  it.each(["x7k2p9q", "promo-natal", "abc"])("aceita %s", (value) => {
+    expect(isSlugFormat(value)).toBe(true);
+  });
+
+  it.each(["ab", "favicon.ico", "Promo", "a".repeat(31), "promo_natal"])(
+    "descarta %s",
+    (value) => {
+      expect(isSlugFormat(value)).toBe(false);
     },
   );
 });

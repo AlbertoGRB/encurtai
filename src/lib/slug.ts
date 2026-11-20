@@ -44,3 +44,9 @@ export const customSlugSchema = z
   .refine((slug) => !RESERVED_SLUGS.has(slug), {
     error: "Apelido indisponível.",
   });
+
+// Formato de qualquer apelido, aleatório ou escolhido. A rota de redirecionamento usa
+// para descartar endereços que não podem ser um link antes de ir ao banco.
+export function isSlugFormat(value: string) {
+  return /^[a-z0-9-]{3,30}$/.test(value);
+}

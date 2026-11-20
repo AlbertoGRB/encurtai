@@ -142,9 +142,10 @@ sequenceDiagram
   participant L as lib (regras)
   participant DB as PostgreSQL
   U->>A: URL e apelido opcional
-  A->>A: confere login e limite por hora
+  A->>A: confere login
   A->>L: valida URL e apelido (Zod + regras)
   L-->>A: ok ou erro com mensagem
+  A->>A: confere o limite por hora (um erro de digitação não gasta a cota)
   A->>DB: INSERT link
   DB-->>A: link criado (ou apelido em uso)
   A-->>U: link curto

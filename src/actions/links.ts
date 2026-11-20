@@ -4,9 +4,12 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getAppUrl, shortUrlFor } from "@/lib/app-url";
 import { auth } from "@/lib/auth";
+import { forgetLink } from "@/lib/link-cache";
 import { createLink, deleteLink, setLinkActive } from "@/lib/links";
+import { createLinkRateLimit, LINKS_PER_HOUR } from "@/lib/rate-limit";
 import { customSlugSchema } from "@/lib/slug";
 import { destinationUrlSchema } from "@/lib/url";
+import { formatWaitTime } from "@/lib/wait-time";
 
 // No erro, os valores digitados voltam para o formulário não ficar em branco.
 export type CreateLinkState =
@@ -49,6 +52,16 @@ export async function createLinkAction(
     return { status: "error", message: parsed.error.issues[0].message, values };
   }
 
+  // O limite é conferido depois da validação: um erro de digitação não gasta a cota.
+  const { success, reset } = await createLinkRateLimit.limit(userId);
+  if (!success) {
+    return {
+      status: "error",
+      message: `Você já criou ${LINKS_PER_HOUR} links na última hora. Tente de novo ${formatWaitTime(reset)}.`,
+      values,
+    };
+  }
+
   const link = await createLink({ userId, ...parsed.data });
   if (!link) {
     return { status: "error", message: "Apelido indisponível.", values };
@@ -70,7 +83,7 @@ export async function setLinkActiveAction(linkId: string, active: boolean) {
     linkIdSchema.parse(linkId),
     z.boolean().parse(active),
   );
-  if (slug) revalidatePath("/dashboard");
+  if (slug) await linkChanged(slug);
 }
 
 export async function deleteLinkAction(linkId: string) {
@@ -78,5 +91,11 @@ export async function deleteLinkAction(linkId: string) {
   if (!userId) return;
 
   const slug = await deleteLink(userId, linkIdSchema.parse(linkId));
-  if (slug) revalidatePath("/dashboard");
+  if (slug) await linkChanged(slug);
+}
+
+// O cache sai na hora: o link desativado ou excluído para de redirecionar no mesmo instante.
+async function linkChanged(slug: string) {
+  await forgetLink(slug);
+  revalidatePath("/dashboard");
 }

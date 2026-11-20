@@ -33,8 +33,28 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+      # Mesma API REST do Upstash, apontando para o Redis acima
+      redis-http:
+        image: hiett/serverless-redis-http:0.0.10
+        env:
+          SRH_MODE: env
+          SRH_TOKEN: ci-token
+          SRH_CONNECTION_STRING: redis://redis:6379
+        ports:
+          - 8079:80
+
     env:
       DATABASE_URL: postgresql://encurtai:encurtai@localhost:5432/encurtai
+      UPSTASH_REDIS_REST_URL: http://localhost:8079
+      UPSTASH_REDIS_REST_TOKEN: ci-token
 
     steps:
       - uses: actions/checkout@v7

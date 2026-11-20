@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { linkNotFoundResponse } from "@/lib/link-not-found";
-import { findActiveLink } from "@/lib/links";
+import { findLinkForRedirect } from "@/lib/link-cache";
 import { isSlugFormat } from "@/lib/slug";
 
 export async function GET(
@@ -12,7 +12,7 @@ export async function GET(
   // Endereço que nem tem formato de apelido não chega ao banco.
   if (!isSlugFormat(slug)) return linkNotFoundResponse();
 
-  const link = await findActiveLink(slug);
+  const link = await findLinkForRedirect(slug);
   if (!link) return linkNotFoundResponse();
 
   return NextResponse.redirect(link.url, 302);

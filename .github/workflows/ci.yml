@@ -1,9 +1,12 @@
 name: CI
 
 on:
+  # Mudança só em documentação não roda o CI.
   push:
     branches: [main]
+    paths-ignore: ["**.md", "docs/**", "LICENSE"]
   pull_request:
+    paths-ignore: ["**.md", "docs/**", "LICENSE"]
 
 permissions:
   contents: read

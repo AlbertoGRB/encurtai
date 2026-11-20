@@ -17,6 +17,25 @@ jobs:
     name: Lint, tipos, testes e build
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: encurtai
+          POSTGRES_PASSWORD: encurtai
+          POSTGRES_DB: encurtai
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U encurtai -d encurtai"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://encurtai:encurtai@localhost:5432/encurtai
+
     steps:
       - uses: actions/checkout@v7
 
@@ -36,6 +55,12 @@ jobs:
 
       - name: Tipos
         run: npm run typecheck
+
+      - name: Aplicar as migrações
+        run: npx prisma migrate deploy
+
+      - name: Conferir se o schema e as migrações batem
+        run: npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
 
       - name: Testes
         run: npm test

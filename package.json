@@ -10,9 +10,14 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -22,12 +27,17 @@
     "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "18.0.9",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "eslint-config-prettier": "10.1.8",
     "prettier": "3.9.10",
+    "prisma": "7.10.1",
     "tailwindcss": "4.3.3",
     "typescript": "^5",
     "vitest": "5.1.1"
+  },
+  "overrides": {
+    "effect": "3.22.4"
   }
 }

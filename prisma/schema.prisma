@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Tabelas usadas pelo Auth.js (login com GitHub)
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  links    Link[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Links e cliques
+
+model Link {
+  id        String    @id @default(cuid())
+  slug      String    @unique @db.VarChar(30)
+  url       String    @db.VarChar(2048)
+  userId    String
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  // Exclusão lógica: a linha fica no banco para o apelido nunca ser reaproveitado.
+  deletedAt DateTime?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clicks Click[]
+
+  @@index([userId, createdAt])
+}
+
+model Click {
+  id           String   @id @default(cuid())
+  linkId       String
+  createdAt    DateTime @default(now())
+  referrerHost String?
+  browser      String?
+  os           String?
+  device       String?
+  country      String?  @db.VarChar(2)
+  isBot        Boolean  @default(false)
+
+  link Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
+  // O painel sempre filtra por link e período.
+  @@index([linkId, createdAt])
+}

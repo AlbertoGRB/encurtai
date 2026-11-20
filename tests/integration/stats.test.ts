@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { db } from "@/lib/db";
 import { createLink, deleteLink } from "@/lib/links";
 import { clicksPerDay, findOwnLink, getLinkStats } from "@/lib/stats";
-import { createUser, resetDatabase } from "./helpers";
+import { createUser, resetDatabase } from "../helpers/database";
 
 // "2026-11-20" no horário de Brasília, que é UTC-3 o ano todo (sem horário de verão desde 2019).
 function dayInBrazil(date: Date) {

@@ -91,5 +91,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Instalar o navegador dos testes ponta a ponta
+        run: npx playwright install --with-deps chromium
+
+      - name: Testes ponta a ponta
+        run: npm run test:e2e
+        env:
+          # Valores só para o teste. Fora da Vercel, o Auth.js precisa saber que pode confiar no host.
+          AUTH_SECRET: segredo-usado-so-no-ci
+          AUTH_TRUST_HOST: "true"
+          APP_URL: http://localhost:3000
+
       - name: Auditoria das dependências
         run: npm audit --omit=dev --audit-level=high

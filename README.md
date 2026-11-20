@@ -43,17 +43,18 @@ O login precisa de um OAuth App seu no GitHub:
 
 ## Scripts
 
-| Comando                    | O que faz                                                  |
-| -------------------------- | ---------------------------------------------------------- |
-| `npm run dev`              | sobe o app em modo de desenvolvimento                      |
-| `npm run build`            | gera o build de produção                                   |
-| `npm run lint`             | roda o ESLint                                              |
-| `npm run typecheck`        | confere os tipos com o TypeScript                          |
-| `npm run format`           | formata o código com o Prettier                            |
-| `npm test`                 | roda os testes unitários                                   |
-| `npm run test:integration` | roda os testes com o banco (apaga os dados do banco local) |
-| `npm run db:migrate`       | aplica e cria migrações do Prisma                          |
-| `npm run db:studio`        | abre o Prisma Studio                                       |
+| Comando                    | O que faz                                                              |
+| -------------------------- | ---------------------------------------------------------------------- |
+| `npm run dev`              | sobe o app em modo de desenvolvimento                                  |
+| `npm run build`            | gera o build de produção                                               |
+| `npm run lint`             | roda o ESLint                                                          |
+| `npm run typecheck`        | confere os tipos com o TypeScript                                      |
+| `npm run format`           | formata o código com o Prettier                                        |
+| `npm test`                 | roda os testes unitários                                               |
+| `npm run test:integration` | roda os testes com o banco (apaga os dados do banco local)             |
+| `npm run test:e2e`         | roda os testes ponta a ponta no navegador (também apaga o banco local) |
+| `npm run db:migrate`       | aplica e cria migrações do Prisma                                      |
+| `npm run db:studio`        | abre o Prisma Studio                                                   |
 
 ## Documentação
 

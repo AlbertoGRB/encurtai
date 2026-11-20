@@ -7,7 +7,7 @@ import {
   listLinks,
   setLinkActive,
 } from "@/lib/links";
-import { createUser, resetDatabase } from "./helpers";
+import { createUser, resetDatabase } from "../helpers/database";
 
 const URL_DESTINO = "https://example.com/promo";
 

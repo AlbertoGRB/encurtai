@@ -4,7 +4,7 @@ import { findLinkForRedirect, forgetLink } from "@/lib/link-cache";
 import { createLink, setLinkActive } from "@/lib/links";
 import { createLinkRateLimit, LINKS_PER_HOUR } from "@/lib/rate-limit";
 import { redis } from "@/lib/redis";
-import { createUser, resetDatabase } from "./helpers";
+import { createUser, resetDatabase } from "../helpers/database";
 
 // Apelido diferente a cada execução, para não esbarrar em chaves de outra rodada.
 const slug = `teste-${randomUUID().slice(0, 8)}`;

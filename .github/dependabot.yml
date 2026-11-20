@@ -8,6 +8,11 @@ updates:
     groups:
       minor-e-patch:
         update-types: [minor, patch]
+    ignore:
+      # A partir da 2.1.0, os scripts Lua usam a flag allow-key-locking, que só
+      # o Upstash aceita. O Redis do docker-compose e do CI recusa o script.
+      - dependency-name: "@upstash/ratelimit"
+        versions: [">=2.1.0"]
 
   - package-ecosystem: github-actions
     directory: /

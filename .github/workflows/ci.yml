@@ -62,8 +62,11 @@ jobs:
       - name: Conferir se o schema e as migrações batem
         run: npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
 
-      - name: Testes
+      - name: Testes unitários
         run: npm test
+
+      - name: Testes de integração
+        run: npm run test:integration
 
       - name: Build
         run: npm run build

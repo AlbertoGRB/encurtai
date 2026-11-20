@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "prisma migrate deploy && next build",
-  "regions": ["gru1"]
+  "buildCommand": "if [ \"$VERCEL_ENV\" = production ]; then prisma migrate deploy; fi && next build",
+  "regions": ["gru1"],
+  "git": {
+    "deploymentEnabled": {
+      "dependabot/**": false
+    }
+  }
 }

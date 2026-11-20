@@ -47,7 +47,7 @@ O login precisa de um OAuth App seu no GitHub:
 
 O projeto roda na Vercel, com o banco no Neon e o Redis no Upstash, todos em São Paulo.
 
-1. Importe o repositório na Vercel. O `vercel.json` já define o build, que aplica as migrações antes do `next build`, e a região das funções.
+1. Importe o repositório na Vercel. O `vercel.json` já define o build, que aplica as migrações antes do `next build` só no deploy de produção, e a região das funções. Os PRs do Dependabot não geram prévia.
 2. Em **Storage**, crie um banco Neon com o prefixo `DATABASE`. A integração cria a `DATABASE_URL` e a `DATABASE_URL_UNPOOLED`, usada nas migrações.
 3. Crie um banco Redis no Upstash e cadastre `UPSTASH_REDIS_REST_URL` e `UPSTASH_REDIS_REST_TOKEN`.
 4. Crie um OAuth App no GitHub com o callback `https://<seu-dominio>/api/auth/callback/github` e cadastre `AUTH_GITHUB_ID`, `AUTH_GITHUB_SECRET` e um `AUTH_SECRET` novo.
